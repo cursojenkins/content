@@ -10,6 +10,8 @@ services:
         volumes:
             - jenkins-data:/var/jenkins_home/
             - /var/run/docker.sock:/var/run/docker.sock
+            - ~/.docker/:/home/jenkins/.docker/
+            - ~/.docker/:/root/
     node:
         image: jeffersonsouza/jenkins:slave-node
         privileged: true
