@@ -1,0 +1,31 @@
+version: '2'
+services:
+    jenkins:
+        image: jeffersonsouza/jenkins:alpine
+        privileged: true
+        restart: always
+        ports:
+            - "80:8080"
+            - "50000:50000"
+        volumes:
+            - jenkins-data:/var/jenkins_home/
+            - /var/run/docker.sock:/var/run/docker.sock
+    node:
+        image: jeffersonsouza/jenkins:slave-node
+        privileged: true
+        restart: always
+        ports:
+            - 22
+        volumes_from:
+            - jenkins
+    php56:
+        image: jeffersonsouza/jenkins:slave-php5
+        privileged: true
+        restart: always
+        ports:
+            - 22
+        volumes_from:
+            - jenkins
+volumes:
+    jenkins-data:
+        driver: local
